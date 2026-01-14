@@ -39,7 +39,7 @@
                 <div class="message-bubble">
                     {{ msg.text }}
                 </div>
-                <span class="message-time">{{ msg.time || 'À l\'instant' }}</span>
+                <span class="message-time">{{ msg?.time || 'À l\'instant' }}</span>
             </div>
             <div class="message-avatar" *ngIf="msg.sender === 'USER'">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"

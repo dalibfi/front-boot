@@ -9,7 +9,9 @@ export class ChatService {
 
     sendMessage(message: string) {
         return this.http.post<any>(
-            'http://localhost:8080/api/chat',
+            // 'http://localhost:8080/api/chat',
+            'http://localhost:8080/',
+
             { message }
         );
     }
