@@ -39,7 +39,7 @@
                 <div class="message-bubble">
                     {{ msg.text }}
                 </div>
-                <span class="message-time">{{ msg?.time || 'À l\'instant' }}</span>
+                <span class="message-time">{{ msg.time || 'À l\'instant' }}</span>
             </div>
             <div class="message-avatar" *ngIf="msg.sender === 'USER'">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -60,12 +60,20 @@
                     d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
             </svg>
         </button>
+
         <input [(ngModel)]="userInput" placeholder="Écrivez votre message..." class="message-input"
-            (keyup.enter)="send()" />
-        <button (click)="send()" class="send-button" type="button">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
-            </svg>
+            (keyup.enter)="send()" [disabled]="isSending" />
+
+        <button class="send-button" type="button" (click)="send()" [disabled]="isSending">
+            <ng-container *ngIf="!isSending; else sending">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+                </svg>
+            </ng-container>
+            <ng-template #sending>
+                Sending...
+            </ng-template>
         </button>
     </div>
+
 </div>
