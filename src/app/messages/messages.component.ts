@@ -9,26 +9,32 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './messages.component.html',
-  styleUrl: './messages.component.css'
+  styleUrls: ['./messages.component.css']
 })
 export class MessagesComponent {
   messages: Message[] = [];
   userInput = '';
   isSending = false;
+  sessionId: string;
 
-
-  constructor(private chatService: ChatService) { }
+  constructor(private chatService: ChatService) {
+    // Générer un sessionId unique pour cette conversation
+    this.sessionId = crypto.randomUUID();
+  }
 
   send() {
     if (!this.userInput.trim() || this.isSending) return;
 
     this.isSending = true;
 
+    // Ajouter le message utilisateur à l'affichage
     this.messages.push({ sender: 'USER', text: this.userInput });
 
-    this.chatService.sendMessage(this.userInput)
+    // Envoyer le message + sessionId au backend
+    this.chatService.sendMessage(this.userInput, this.sessionId)
       .subscribe({
         next: (res) => {
+          // Ajouter la réponse AI à l'affichage
           this.messages.push({
             sender: 'AI',
             text: res.reply
